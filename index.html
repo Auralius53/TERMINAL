@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL</title>
+    <style>
+        @font-face {
+            font-family: 'VCR OSD Mono';
+            src: url('VCR_OSD_MONO_1.001.ttf') format('truetype');
+        }
+
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'VCR OSD Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .status-update {
+            text-align: left;
+            white-space: pre;
+            line-height: 0.8; /* Reduced line spacing */
+        }
+
+        .important {
+            color: red;
+        }
+
+        .typewriter {
+            border-right: .15em solid black;
+            animation: blink-caret .75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: black }
+        }
+
+        pre {
+            font-family: 'VCR OSD Mono', monospace;
+            white-space: pre;
+            margin: 0;
+        }
+
+        .container {
+            display: none;
+            border: 2px solid white;
+            padding: 20px;
+            width: 55%;
+            height: 70%;
+            color: white;
+            text-align: left;
+            overflow: auto;
+            position: relative; /* Added position relative */
+        }
+
+        .container h1 {
+            font-size: 2em;
+            margin: 0 0 20px 0;
+        }
+
+        .container .type {
+            color: yellow;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .container .data {
+            margin-bottom: 10px;
+        }
+
+        .container p {
+            margin: 0 0 10px 0;
+        }
+
+        .social-icons {
+            position: absolute;
+            bottom: 20px; /* Adjust to align with text margins */
+            left: 20px; /* Adjust to align with text margins */
+        }
+
+        .social-icons a {
+            color: white;
+            margin-right: 10px;
+            font-size: 1.5em; /* Adjust size as needed */
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <pre class="status-update typewriter" id="typewriter"></pre>
+    <div class="container" id="newContainer">
+        <p style="font-size: 40px;">AURA</p>
+        <br>
+        <div class="type"><p style="color: orange;">TYPE: SUPREME IDIOT</p></div>
+        <br>
+        <div class="data">
+            <p style="color: orange;">DATA:</p>
+            <p>Hi, I'm Aura, a 17-year-old graphic designer and aspiring programmer. I focus on creating sleek, modern 3D logos and am currently learning front-end development with Bootstrap and Tailwind CSS. In my free time, I'm also learning Japanese.
+
+            </p>
+            <br>
+            <p style="color: orange;">STRATEGY:</p>
+            <p>As of right now, I am currently a Moderator for MAD Studio. I am also a Content Moderator and Graphic Designer over at BLOX City.</p>
+        </div>
+        <div class="social-icons">
+            <a href="https://x.com/Auraliuus" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.youtube.com/@Auralius" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://github.com/Auralius53" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const lines1 = [
+                { text: "STATUS UPDATE:\n\n", className: "" },
+                { text: "MACHINE ID:         V1\n", className: "" },
+                { text: "LOCATION:           APPROACHING HELL\n", className: "" },
+                { text: "CURRENT OBJECTIVE:  FIND A WEAPON\n", className: "" },
+                { text: "\n", className: "" }
+            ];
+
+            const lines2 = [
+                { text: "MANKIND IS DEAD.\n", className: "important" },
+                { text: "BLOOD IS FUEL.\n", className: "important" },
+                { text: "HELL IS FULL.", className: "important" }
+            ];
+
+            let charIndex = 0;
+            let lineIndex = 0;
+            const typewriter = document.getElementById('typewriter');
+            const newContainer = document.getElementById('newContainer');
+            const speed1 = 45; // fast typing speed for the first part
+            const speed2 = 75; // slow typing speed for the second part
+
+            function typeCharacter(lines, speed, callback) {
+                if (lineIndex < lines.length) {
+                    const line = lines[lineIndex];
+                    if (charIndex < line.text.length) {
+                        const span = document.createElement('span');
+                        span.textContent = line.text.charAt(charIndex);
+                        if (line.className) {
+                            span.className = line.className;
+                        }
+                        typewriter.appendChild(span);
+                        charIndex++;
+                        setTimeout(() => typeCharacter(lines, speed, callback), speed);
+                    } else {
+                        charIndex = 0;
+                        lineIndex++;
+                        typewriter.innerHTML += '\n'; // Add a line break after each line
+                        setTimeout(() => typeCharacter(lines, speed, callback), speed);
+                    }
+                } else {
+                    if (callback) callback();
+                }
+            }
+
+            typeCharacter(lines1, speed1, () => {
+                lineIndex = 0;
+                charIndex = 0;
+                setTimeout(() => typeCharacter(lines2, speed2, () => {
+                    setTimeout(() => {
+                        typewriter.style.display = 'none';
+                        setTimeout(() => {
+                            newContainer.style.display = 'block';
+                        }, 1000); // pause for a second before showing the new container
+                    }, 1000); // pause for 2 seconds before fading out
+                }), 500); // pause before starting the second part
+            });
+        });
+    </script>
+</body>
+</html>
